@@ -1,9 +1,7 @@
 import React from 'react'
 
-import AppBar from '@material-ui/core/AppBar'
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
-import IconButton from '@material-ui/core/IconButton'
-import Toolbar from '@material-ui/core/Toolbar'
+import { IconButton, Toolbar, AppBar } from '@material-ui/core/'
 
 import Basket from './Basket'
 import Search from './Search'
@@ -45,6 +43,7 @@ export default function AppNavBar({ searchName, handleSearch }: SearchProps) {
     <div className={classes.root}>
       <AppBar
         position="static"
+        // position="fixed"
         className="app-bar"
         style={{ background: theme['--primary'] }}
       >

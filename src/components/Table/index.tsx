@@ -2,18 +2,17 @@ import React from 'react'
 
 import { Table, TableBody } from '@material-ui/core'
 
-import { Country } from '../../types'
+import { Country, TableOfCountriesProps } from '../../types'
 import TableHeader from './Header'
 import Row from './Row'
 
-export type TableOfCountriesProps = {
-  data: Country[]
-}
-
-export default function TableOfCountries({ data }: TableOfCountriesProps) {
+export default function TableOfCountries({
+  data,
+  handleSort,
+}: TableOfCountriesProps) {
   return (
     <Table>
-      <TableHeader />
+      <TableHeader handleSort={handleSort} />
       <TableBody>
         {data.map((country: Country) => {
           const { flag, name, languages, population, region } = country

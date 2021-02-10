@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import orderBy from 'lodash/orderBy'
 
-import { Product, AppState } from '../types'
+import { Product, AppState, SortDirection, SortColumn } from '../types'
 import { addProduct, removeProduct } from '../redux/actions'
 import useCountry from '../hooks/useCountry'
 import TableOfCountries from '../components/Table'
@@ -14,6 +15,10 @@ const names = ['Apple', 'Orange', 'Avocado', 'Banana', 'Cucumber', 'Carrot']
 export default function Home() {
   const [searchName, setSearchName] = useState('')
   const [data] = useCountry(searchName)
+  const [columnToSort, setColumnToSort] = useState<SortColumn>(SortColumn.Empty)
+  const [sortDirection, setSortDirection] = useState<SortDirection>(
+    SortDirection.Descending
+  )
 
   const dispatch = useDispatch()
   const products = useSelector((state: AppState) => state.product.inCart)
@@ -29,6 +34,16 @@ export default function Home() {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value)
+  }
+  const handleSort = (column: SortColumn) => {
+    setColumnToSort(column)
+    setSortDirection(
+      columnToSort === column
+        ? sortDirection === SortDirection.Ascending
+          ? SortDirection.Descending
+          : SortDirection.Ascending
+        : SortDirection.Ascending
+    )
   }
 
   return (
@@ -48,7 +63,10 @@ export default function Home() {
       </ul>
       <button onClick={handleAddProduct}>Add product</button>
       <AppBar searchName={searchName} handleSearch={handleSearch} />
-      <TableOfCountries data={data} />
+      <TableOfCountries
+        data={orderBy(data, columnToSort, sortDirection)}
+        handleSort={handleSort}
+      />
     </>
   )
 }

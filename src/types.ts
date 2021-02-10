@@ -23,9 +23,36 @@ export type Country = {
   population: number
   region: string
 }
+
+// Filtering
 export type SearchProps = {
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
   searchName: string
+}
+// Sorting
+export enum SortColumn {
+  Flag = 'flag',
+  Name = 'name',
+  Languages = 'languages',
+  Population = 'population',
+  Region = 'region',
+  Empty = '',
+}
+export type HeaderName = {
+  name: string
+  value: SortColumn
+}
+export type TableHeaderProps = {
+  handleSort: (column: SortColumn) => void
+}
+export type TableOfCountriesProps = {
+  data: Country[]
+  handleSort: (column: SortColumn) => void
+}
+
+export enum SortDirection {
+  Ascending = 'asc',
+  Descending = 'desc',
 }
 
 //fetch action types
