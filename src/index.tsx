@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import makeStore from './redux/store'
-import { ThemeProvider } from './contexts/ThemeContect'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 const store = makeStore()
 

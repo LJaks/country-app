@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { FlagProps } from '../../../types'
 
 export default function Flags({ flag }: FlagProps) {

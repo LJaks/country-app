@@ -2,32 +2,63 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { AppState } from '../types'
-
-import { makeStyles } from '@material-ui/core/styles'
-import CardContent from '@material-ui/core/CardContent'
-import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
-import { Button } from '@material-ui/core'
+import {
+  makeStyles,
+  CardContent,
+  Card,
+  Typography,
+  Button,
+} from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import Flags from '../components/Table/Flags'
-import { useTheme } from '../contexts/ThemeContect'
+
+import { AppState } from '../types'
+import { useTheme } from '../contexts/ThemeContext'
 
 const useStyles = makeStyles({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    height: '100vh',
+  },
+  card: {
     minWidth: 275,
-    width: '50%',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    width: '70%',
+    height: '70%',
+    marginTop: 50,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    boxShadow: '',
+  },
+  content: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0,
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: 'bold',
     textAlign: 'center',
+    margin: 20,
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    margin: 10,
   },
   button: {
     color: 'white',
+    height: 50,
+  },
+  flag: {
+    width: 300,
+    borderRadius: 10,
   },
 })
 
@@ -41,25 +72,52 @@ export default function Country() {
   )
 
   return (
-    <div>
-      <Button style={{ background: theme['--primary'] }}>
-        <Link to="/">
-          <ArrowBackIcon className={classes.button} />
-        </Link>
-      </Button>
+    <div className={classes.root}>
+      <div style={{ marginTop: '50px' }}>
+        <Button
+          className={classes.button}
+          style={{ background: theme['--primary'] }}
+        >
+          <ArrowBackIcon />
+          <Link style={{ color: 'white', textDecoration: 'none' }} to="/">
+            Back Home
+          </Link>
+        </Button>
+      </div>
       {country ? (
-        <Card className={classes.root}>
-          <CardContent>
-            <div className="flag">
-              <Flags flag={country.flag} />
-            </div>
+        <Card
+          style={{ background: theme['--primary'] }}
+          className={classes.card}
+        >
+          <CardContent className={classes.content}>
+            <img
+              className={classes.flag}
+              src={country.flag}
+              alt="Country flag"
+            />
             <Typography className={classes.title} variant="h2" component="h2">
               {country.name}
             </Typography>
-            {/* <h1>{country.name}</h1> */}
-            <p>{`Region: ${country.region}`}</p>
-            <p>{`Population: ${country.population.toLocaleString()}`}</p>
-            <p>{`Languages: ${country.languages.map((lang) => lang.name)}`}</p>
+            <Typography
+              className={classes.text}
+            >{`Native name: ${country.nativeName}`}</Typography>
+            <Typography
+              className={classes.text}
+            >{`Capital: ${country.capital}`}</Typography>
+            <Typography
+              className={classes.text}
+            >{`Region: ${country.region}`}</Typography>
+            <Typography
+              className={classes.text}
+            >{`Demonym: ${country.demonym}`}</Typography>
+            <Typography
+              className={classes.text}
+            >{`Population: ${country.population.toLocaleString()}`}</Typography>
+            <Typography
+              className={classes.text}
+            >{`Languages: ${country.languages.map(
+                (lang) => lang.name
+              )}`}</Typography>
           </CardContent>
         </Card>
       ) : (

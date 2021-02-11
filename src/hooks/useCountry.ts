@@ -1,14 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchCountries } from '../redux/actions/country'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { AppState, Country } from '../types'
 
-export default function useCountry(
-  searchName: string
-  // sortOrder: string
-  // sortColumn: SortColumn = SortColumn.Name
-): [Country[]] {
+export default function useCountry(searchName: string): [Country[]] {
   const allCountries = useSelector(
     (state: AppState) => state.country.allCountries
   )
@@ -20,36 +16,10 @@ export default function useCountry(
     dispatch(fetchCountries())
   }, [dispatch])
 
-  const searchResult = useMemo(() => {
-    //filtering
-    let filtered = allCountries.filter((country) => {
-      return country.name.toLowerCase().includes(searchName.toLowerCase())
-    })
-    //sorting
-    // filtered.sort((a, b) => {
-    //   const aValue = a[sortColumn];
-    //   const bValue = b[sortColumn];
-    //   if (sortOrder === "asc") {
-    //     if (!isNaN(+aValue) && !isNaN(+bValue)) {
-    //       return +aValue - +bValue;
-    //     }
-    //     if (aValue < bValue) {
-    //       return -1;
-    //     } else if (aValue > bValue) {
-    //       return 1;
-    //     }
-    //   } else {
-    //     if (!isNaN(+aValue) && !isNaN(+bValue)) {
-    //       return +bValue - +aValue;
-    //     }
-    //     if (aValue > bValue) {
-    //       return -1;
-    //     } else if (aValue < bValue) {
-    //       return 1;
-    //     }
-    //   }
-    //   return 0;
-    // });
+  useEffect(() => {
+    let filtered = allCountries.filter((country) =>
+      country.name.toLowerCase().includes(searchName.toLowerCase())
+    )
     setFilter(filtered)
   }, [allCountries, searchName])
 

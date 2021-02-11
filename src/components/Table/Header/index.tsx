@@ -23,7 +23,11 @@ export default function TableHeader({ handleSort }: TableHeaderProps) {
     <TableHead>
       <TableRow>
         {headerNames.map(({ name, value }) => (
-          <TableCell key={name} onClick={() => handleSort(value)}>
+          <TableCell
+            style={{ fontSize: 15, fontWeight: 'bold' }}
+            key={name}
+            onClick={() => handleSort(value)}
+          >
             <TableSortLabel>{name}</TableSortLabel>
           </TableCell>
         ))}

@@ -1,15 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import Modal from '@material-ui/core/Modal'
-import { IconButton } from '@material-ui/core/'
+import {
+  IconButton,
+  Modal,
+  makeStyles,
+  Theme,
+  createStyles,
+} from '@material-ui/core/'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppState } from '../../types'
-import Flags from '../Table/Flags'
-import { Link } from 'react-router-dom'
 import { removeCountry } from '../../redux/actions/cart'
+import { AppState, CartProps } from '../../types'
+import Flags from '../Table/Flags'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +30,23 @@ const useStyles = makeStyles((theme: Theme) =>
       border: '2px solid transparent',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(4, 4, 3),
+      overflow: 'hidden',
+    },
+    content: {
+      // overflowY: 'scroll',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center,',
+    },
+    overflow: {
+      overflowY: 'scroll',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center,',
     },
     button: {
       position: 'absolute',
@@ -41,6 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       width: '70%',
+      marginBottom: 10,
+      margin: '0 auto',
     },
     name: {
       display: 'flex',
@@ -49,11 +72,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 )
-
-export type CartProps = {
-  open: boolean
-  handleClose: () => void
-}
 
 export default function Cart({ open, handleClose }: CartProps) {
   const classes = useStyles()
@@ -78,21 +96,27 @@ export default function Cart({ open, handleClose }: CartProps) {
         {countriesinCart.length === 0 ? (
           <p>No countries to view!</p>
         ) : (
-          countriesinCart.map((c) => (
-            <div className={classes.line} id="modal-description" key={c.name}>
-              <Flags flag={c.flag} />
-              <Link className={classes.name} to={`/countries/${c.name}`}>
-                {c.name}
-              </Link>
-              <IconButton
-                onClick={() => {
-                  dispatch(removeCountry(c))
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </div>
-          ))
+          <div
+            className={
+              countriesinCart.length > 6 ? classes.overflow : classes.content
+            }
+          >
+            {countriesinCart.map((c) => (
+              <div className={classes.line} id="modal-description" key={c.name}>
+                <Flags flag={c.flag} />
+                <Link className={classes.name} to={`/countries/${c.name}`}>
+                  {c.name}
+                </Link>
+                <IconButton
+                  onClick={() => {
+                    dispatch(removeCountry(c))
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </Modal>

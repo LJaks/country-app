@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { IconButton, Menu, MenuItem } from '@material-ui/core/'
+import { IconButton, Menu, MenuItem, makeStyles } from '@material-ui/core/'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import PaletteIcon from '@material-ui/icons/Palette'
-import { makeStyles } from '@material-ui/core/styles'
 
-import { useTheme } from '../../../contexts/ThemeContect'
+import { useTheme } from '../../../contexts/ThemeContext'
 import { Color, ThemeType } from '../../../types'
 
 const useStyles = makeStyles({

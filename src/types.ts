@@ -6,8 +6,7 @@ export const TOGGLE_DIALOG = 'TOGGLE_DIALOG'
 export const FETCH_COUNTRIES_PENDING = 'FETCH_COUNTRIES_PENDING'
 export const FETCH_COUNTRIES_SUCCESS = 'FETCH_COUNTRIES_SUCCESS'
 export const FETCH_COUNTRIES_ERROR = 'FETCH_COUNTRIES_ERROR'
-export const FETCH_COUNTRIES = 'FETCH_COUNTRIES'
-export const SET_COUNTRIES = 'SET_COUNTRIES'
+// export const SET_COUNTRIES = 'SET_COUNTRIES'
 export const ADD_COUNTRY = 'ADD_COUNTRY'
 export const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
 
@@ -61,6 +60,11 @@ export enum SortDirection {
   Descending = 'desc',
 }
 
+export type CartProps = {
+  open: boolean
+  handleClose: () => void
+}
+
 //fetch action types
 
 export type FetchCountriesPending = {
@@ -77,9 +81,6 @@ export type FetchCountriesError = {
   type: typeof FETCH_COUNTRIES_ERROR
   error: Error
 }
-// export type FetchCountries = {
-//   type: typeof FETCH_COUNTRIES
-// }
 
 // export type SetCountries = {
 //   type: typeof SET_COUNTRIES
@@ -93,7 +94,6 @@ export type CountryActions =
   | FetchCountriesPending
   | FetchCountriesSuccess
   | FetchCountriesError
-// | FetchCountries
 // | SetCountries
 
 // Country action types

@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { Color, Country } from '../../../types'
-import Flags from '../Flags'
-import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
-
+import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { TableRow, TableCell } from '@material-ui/core/'
-import { useTheme } from '../../../contexts/ThemeContect'
-import { useDispatch } from 'react-redux'
+import AddIcon from '@material-ui/icons/Add'
+import { TableRow, TableCell, Button } from '@material-ui/core/'
+
+import { AppState, Color, Country } from '../../../types'
+import Flags from '../Flags'
+import { useTheme } from '../../../contexts/ThemeContext'
 import { addCountry } from '../../../redux/actions/cart'
 
 export default function Row({
@@ -19,7 +18,6 @@ export default function Row({
   region,
 }: Country) {
   const { theme } = useTheme()
-  const [addedToCart, setAddedToCart] = useState(false)
   const dispatch = useDispatch()
 
   const handleAddCountry = () => {
@@ -31,8 +29,11 @@ export default function Row({
       region,
     }
     dispatch(addCountry(country))
-    setAddedToCart(true)
   }
+
+  const countryInCart = useSelector(
+    (state: AppState) => state.cart.countriesInCart
+  ).find((cntr) => cntr.name === name)
 
   return (
     <TableRow>
@@ -40,7 +41,12 @@ export default function Row({
         <Flags flag={flag} />
       </TableCell>
       <TableCell>
-        <Link to={`/countries/${name}`}>{name}</Link>
+        <Link
+          style={{ textDecoration: 'none', color: theme['--primary'] }}
+          to={`/countries/${name}`}
+        >
+          {name}
+        </Link>
       </TableCell>
       <TableCell>
         {languages.map((language, index) =>
@@ -50,18 +56,23 @@ export default function Row({
       <TableCell>{population.toLocaleString('de-DE')}</TableCell>
       <TableCell>{region}</TableCell>
       <TableCell>
-        <Button
-          // disabled={disabled}
-          variant="contained"
-          style={
-            !addedToCart
-              ? { background: theme['--primary'], color: Color.WHITE }
-              : { background: Color.GRAY }
-          }
-          onClick={() => handleAddCountry()}
-        >
-          <AddIcon />
-        </Button>
+        {!countryInCart ? (
+          <Button
+            variant="contained"
+            style={{ background: theme['--primary'], color: Color.WHITE }}
+            onClick={() => handleAddCountry()}
+          >
+            <AddIcon />
+          </Button>
+        ) : (
+          <Button
+            disabled
+            variant="contained"
+            style={{ background: Color.GRAY }}
+          >
+            <AddIcon />
+          </Button>
+        )}
       </TableCell>
     </TableRow>
   )
