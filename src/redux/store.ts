@@ -6,7 +6,9 @@ import { AppState } from '../types'
 import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
-const initState: AppState = {
+const initState = (JSON.parse(
+  localStorage.getItem('cart') || '{}'
+) as AppState) || {
   product: {
     inCart: [],
   },
