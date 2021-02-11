@@ -5,7 +5,7 @@ import {
   FETCH_COUNTRIES_ERROR,
   FETCH_COUNTRIES_PENDING,
   FETCH_COUNTRIES_SUCCESS,
-  SET_COUNTRIES,
+  // SET_COUNTRIES,
 } from '../../types'
 
 export function fetchCountriesPending() {
@@ -13,10 +13,10 @@ export function fetchCountriesPending() {
     type: FETCH_COUNTRIES_PENDING,
   }
 }
-export function fetchCountriesSuccess(countries: Country[]) {
+export function fetchCountriesSuccess(country: Country[]): CountryActions {
   return {
     type: FETCH_COUNTRIES_SUCCESS,
-    payload: { countries },
+    payload: { country },
   }
 }
 export function fetchCountriesError(error: Error) {
@@ -25,12 +25,12 @@ export function fetchCountriesError(error: Error) {
     payload: { error },
   }
 }
-export function setCountries(country: Country[]): CountryActions {
-  return {
-    type: SET_COUNTRIES,
-    payload: { country },
-  }
-}
+// export function setCountries(country: Country[]): CountryActions {
+//   return {
+//     type: SET_COUNTRIES,
+//     payload: { country },
+//   }
+// }
 
 // Async action processed by redux-thunk middleware
 export function fetchCountries() {
@@ -39,8 +39,8 @@ export function fetchCountries() {
     fetch(`https://restcountries.eu/rest/v2/all`)
       .then((resp) => resp.json())
       .then((countries) => {
-        dispatch(setCountries(countries))
-        // dispatch(fetchCountriesSuccess(countries))
+        // dispatch(setCountries(countries))
+        dispatch(fetchCountriesSuccess(countries))
       })
       .catch((error) => {
         dispatch(fetchCountriesError(error))

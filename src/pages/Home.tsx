@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 import orderBy from 'lodash/orderBy'
 
 import { Product, AppState, SortDirection, SortColumn } from '../types'
-import { addProduct, removeProduct } from '../redux/actions'
+// import { addProduct, removeProduct } from '../redux/actions'
 import useCountry from '../hooks/useCountry'
 import TableOfCountries from '../components/Table'
 
 import AppBar from '../components/AppBar'
 
-const names = ['Apple', 'Orange', 'Avocado', 'Banana', 'Cucumber', 'Carrot']
+// const names = ['Apple', 'Orange', 'Avocado', 'Banana', 'Cucumber', 'Carrot']
 
 export default function Home() {
   const [searchName, setSearchName] = useState('')
@@ -20,17 +20,17 @@ export default function Home() {
     SortDirection.Descending
   )
 
-  const dispatch = useDispatch()
-  const products = useSelector((state: AppState) => state.product.inCart)
+  // const dispatch = useDispatch()
+  // const products = useSelector((state: AppState) => state.product.inCart)
 
-  const handleAddProduct = () => {
-    const product: Product = {
-      id: (+new Date()).toString(),
-      name: names[Math.floor(Math.random() * names.length)],
-      price: +(Math.random() * 10).toFixed(2),
-    }
-    dispatch(addProduct(product))
-  }
+  // const handleAddProduct = () => {
+  //   const product: Product = {
+  //     id: (+new Date()).toString(),
+  //     name: names[Math.floor(Math.random() * names.length)],
+  //     price: +(Math.random() * 10).toFixed(2),
+  //   }
+  //   dispatch(addProduct(product))
+  // }
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value)
@@ -48,7 +48,7 @@ export default function Home() {
 
   return (
     <>
-      <h1>Home page</h1>
+      {/* <h1>Home page</h1>
       {products.length <= 0 && <div>No products in cart</div>}
       <ul>
         {products.map((p) => (
@@ -61,7 +61,8 @@ export default function Home() {
           </li>
         ))}
       </ul>
-      <button onClick={handleAddProduct}>Add product</button>
+      <button onClick={handleAddProduct}>Add product</button> */}
+
       <AppBar searchName={searchName} handleSearch={handleSearch} />
       <TableOfCountries
         data={orderBy(data, columnToSort, sortDirection)}

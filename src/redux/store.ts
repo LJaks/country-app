@@ -15,6 +15,11 @@ const initState: AppState = {
   },
   country: {
     allCountries: [],
+    pending: false,
+    error: null,
+  },
+  cart: {
+    countriesInCart: [],
   },
 }
 

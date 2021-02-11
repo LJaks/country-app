@@ -3,9 +3,10 @@ import React from 'react'
 import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles'
 import { IconButton, Toolbar, AppBar } from '@material-ui/core/'
 
-import Basket from './Basket'
+import CartButton from './CartButton'
 import Search from './Search'
 import ThemesButton from './ThemesButton'
+
 import { SearchProps } from '../../types'
 import { useTheme } from '../../contexts/ThemeContect'
 
@@ -60,7 +61,7 @@ export default function AppNavBar({ searchName, handleSearch }: SearchProps) {
             <Search searchName={searchName} handleSearch={handleSearch} />
           </div>
           <div className={classes.root} />
-          <Basket />
+          <CartButton />
         </Toolbar>
       </AppBar>
     </div>

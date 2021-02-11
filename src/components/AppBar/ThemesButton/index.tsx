@@ -75,6 +75,17 @@ export default function ThemesButton() {
         onClose={handleClose}
       >
         <div className={classes.root}>
+          <MenuItem onClick={() => handleThemeChange('blue')}>
+            <div className={classes.line}>
+              <span
+                className={classes.icons}
+                style={{ background: Color.BLUE }}
+              >
+                B
+              </span>{' '}
+              blue
+            </div>
+          </MenuItem>
           <MenuItem onClick={() => handleThemeChange('green')}>
             <div className={classes.line}>
               <span

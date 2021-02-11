@@ -3,10 +3,13 @@ import { Color, Country } from '../../../types'
 import Flags from '../Flags'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
+
 import { Link } from 'react-router-dom'
 
 import { TableRow, TableCell } from '@material-ui/core/'
 import { useTheme } from '../../../contexts/ThemeContect'
+import { useDispatch } from 'react-redux'
+import { addCountry } from '../../../redux/actions/cart'
 
 export default function Row({
   flag,
@@ -15,12 +18,20 @@ export default function Row({
   population,
   region,
 }: Country) {
-  const [disabled, setDisabled] = useState(false)
   const { theme } = useTheme()
+  const [addedToCart, setAddedToCart] = useState(false)
+  const dispatch = useDispatch()
 
-  const handleClick = () => {
-    console.log('clicked')
-    setDisabled(!disabled)
+  const handleAddCountry = () => {
+    const country = {
+      flag,
+      name,
+      languages,
+      population,
+      region,
+    }
+    dispatch(addCountry(country))
+    setAddedToCart(true)
   }
 
   return (
@@ -40,10 +51,14 @@ export default function Row({
       <TableCell>{region}</TableCell>
       <TableCell>
         <Button
-          disabled={disabled}
+          // disabled={disabled}
           variant="contained"
-          style={{ background: theme['--primary'], color: Color.WHITE }}
-          onClick={() => handleClick()}
+          style={
+            !addedToCart
+              ? { background: theme['--primary'], color: Color.WHITE }
+              : { background: Color.GRAY }
+          }
+          onClick={() => handleAddCountry()}
         >
           <AddIcon />
         </Button>

@@ -15,12 +15,12 @@ export type ThemeContextProps = {
 }
 
 export const ThemeContext = createContext<ThemeContextProps>({
-  themeType: 'green',
-  theme: THEMES['green'],
+  themeType: 'blue',
+  theme: THEMES['blue'],
 } as ThemeContextProps)
 
 export const ThemeProvider: React.FC = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeType>('green')
+  const [theme, setTheme] = useState<ThemeType>('blue')
 
   return (
     <ThemeContext.Provider

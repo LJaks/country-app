@@ -8,6 +8,8 @@ export const FETCH_COUNTRIES_SUCCESS = 'FETCH_COUNTRIES_SUCCESS'
 export const FETCH_COUNTRIES_ERROR = 'FETCH_COUNTRIES_ERROR'
 export const FETCH_COUNTRIES = 'FETCH_COUNTRIES'
 export const SET_COUNTRIES = 'SET_COUNTRIES'
+export const ADD_COUNTRY = 'ADD_COUNTRY'
+export const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
 
 export type FlagProps = {
   flag: string
@@ -22,6 +24,10 @@ export type Country = {
   languages: Languages[]
   population: number
   region: string
+  nativeName?: string
+  area?: number
+  capital?: string
+  demonym?: string
 }
 
 // Filtering
@@ -62,30 +68,48 @@ export type FetchCountriesPending = {
 }
 export type FetchCountriesSuccess = {
   type: typeof FETCH_COUNTRIES_SUCCESS
+  payload: {
+    country: Country[]
+  }
   // countries: Country[]
 }
 export type FetchCountriesError = {
   type: typeof FETCH_COUNTRIES_ERROR
   error: Error
 }
-export type FetchCountries = {
-  type: typeof FETCH_COUNTRIES
-}
+// export type FetchCountries = {
+//   type: typeof FETCH_COUNTRIES
+// }
 
-export type SetCountries = {
-  type: typeof SET_COUNTRIES
-  payload: {
-    country: Country[]
-  }
-}
+// export type SetCountries = {
+//   type: typeof SET_COUNTRIES
+//   payload: {
+//     country: Country[]
+//   }
+// }
 
 // Use this union in reducer
 export type CountryActions =
   | FetchCountriesPending
   | FetchCountriesSuccess
   | FetchCountriesError
-  | FetchCountries
-  | SetCountries
+// | FetchCountries
+// | SetCountries
+
+// Country action types
+export type AddCountryAction = {
+  type: typeof ADD_COUNTRY
+  payload: {
+    country: Country
+  }
+}
+export type RemoveCountryAction = {
+  type: typeof REMOVE_COUNTRY
+  payload: {
+    country: Country
+  }
+}
+export type CartActions = AddCountryAction | RemoveCountryAction
 
 // Enum
 export enum DialogType {
@@ -96,12 +120,14 @@ export enum DialogType {
 // Theme types
 
 export enum Color {
-  GREEN = '#008000',
-  VIOLET = '#9E25FC',
-  RED = '	#FF0000',
+  GREEN = '#4caf50',
+  VIOLET = '#673ab7',
+  RED = '#f44336',
+  BLUE = '#3f50b5',
   WHITE = '#FFF',
+  GRAY = '#bdbdbd',
 }
-export type ThemeType = 'green' | 'red' | 'violet'
+export type ThemeType = 'blue' | 'green' | 'red' | 'violet' | 'gray'
 
 export type Theme = {
   '--primary': Color
@@ -146,6 +172,12 @@ export type ProductState = {
 
 export type CountryState = {
   allCountries: Country[]
+  pending: boolean
+  error: Error | null
+}
+
+export type CartState = {
+  countriesInCart: Country[]
 }
 
 // Using dynamic keys from an enum
@@ -159,4 +191,5 @@ export type AppState = {
   product: ProductState
   ui: UiState
   country: CountryState
+  cart: CartState
 }
