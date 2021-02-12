@@ -9,12 +9,6 @@ import rootSaga from './sagas'
 const initState = (JSON.parse(
   localStorage.getItem('cart') || '{}'
 ) as AppState) || {
-  product: {
-    inCart: [],
-  },
-  ui: {
-    dialogOpen: {},
-  },
   country: {
     allCountries: [],
     pending: false,
