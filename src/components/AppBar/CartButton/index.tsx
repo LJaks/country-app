@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
-import { IconButton } from '@material-ui/core/'
+import { IconButton, Badge } from '@material-ui/core/'
 
 import Cart from '../../Cart'
+import { AppState } from '../../../types'
 
 export default function CartButton() {
   const [open, setOpen] = useState(false)
+  const countriesinCart = useSelector(
+    (state: AppState) => state.cart.countriesInCart
+  )
 
   const handleOpen = () => {
     setOpen(true)
@@ -24,7 +29,9 @@ export default function CartButton() {
         color="inherit"
         onClick={handleOpen}
       >
-        <ShoppingBasketIcon />
+        <Badge badgeContent={countriesinCart.length} color="secondary">
+          <ShoppingBasketIcon />
+        </Badge>
       </IconButton>
       <Cart handleClose={handleClose} open={open} />
     </>

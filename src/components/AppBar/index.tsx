@@ -1,7 +1,6 @@
 import React from 'react'
 
 import {
-  IconButton,
   Toolbar,
   AppBar,
   createStyles,
@@ -21,9 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-    },
-    themeButton: {
-      marginRight: theme.spacing(2),
     },
     search: {
       position: 'relative',
@@ -56,14 +52,7 @@ export default function AppNavBar({ searchName, handleSearch }: SearchProps) {
         style={{ background: theme['--primary'] }}
       >
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.themeButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <ThemesButton />
-          </IconButton>
+          <ThemesButton />
           <div className={classes.search}>
             <Search searchName={searchName} handleSearch={handleSearch} />
           </div>
