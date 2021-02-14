@@ -17,6 +17,9 @@ const initState = (JSON.parse(
   cart: {
     countriesInCart: [],
   },
+  visited: {
+    countriesInVisitedList: [],
+  },
 }
 
 export default function makeStore(initialState = initState) {

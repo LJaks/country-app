@@ -11,9 +11,9 @@ import {
 } from '@material-ui/core/'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-import { removeCountry } from '../../redux/actions/cart'
-import { AppState, CartProps } from '../../types'
 import Flags from '../Table/Flags'
+import { removeVisitedCountry } from '../../redux/actions'
+import { AppState } from '../../types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -73,35 +73,43 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function Cart({ open, handleClose }: CartProps) {
+export type VisitedProps = {
+  openVisited: boolean
+  handleCloseVisited: () => void
+}
+
+export default function Visited({
+  openVisited,
+  handleCloseVisited,
+}: VisitedProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
 
-  const countriesinCart = useSelector(
-    (state: AppState) => state.cart.countriesInCart
+  const visitedCountries = useSelector(
+    (state: AppState) => state.visited.countriesInVisitedList
   )
 
   return (
     <Modal
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
-      open={open}
-      onClose={handleClose}
+      open={openVisited}
+      onClose={handleCloseVisited}
     >
       <div className={classes.paper}>
-        <IconButton className={classes.button} onClick={handleClose}>
+        <IconButton className={classes.button} onClick={handleCloseVisited}>
           X
         </IconButton>
-        <h2 id="modal-title">Countries List</h2>
-        {countriesinCart.length === 0 ? (
-          <p>No countries to view!</p>
+        <h2 id="modal-title">List of visited countries</h2>
+        {visitedCountries.length === 0 ? (
+          <p>No visited countries to view!</p>
         ) : (
           <div
             className={
-              countriesinCart.length > 6 ? classes.overflow : classes.content
+              visitedCountries.length > 6 ? classes.overflow : classes.content
             }
           >
-            {countriesinCart.map((c) => (
+            {visitedCountries.map((c) => (
               <div className={classes.line} id="modal-description" key={c.name}>
                 <Flags flag={c.flag} />
                 <Link className={classes.name} to={`/countries/${c.name}`}>
@@ -109,7 +117,7 @@ export default function Cart({ open, handleClose }: CartProps) {
                 </Link>
                 <IconButton
                   onClick={() => {
-                    dispatch(removeCountry(c))
+                    dispatch(removeVisitedCountry(c))
                   }}
                 >
                   <DeleteIcon />

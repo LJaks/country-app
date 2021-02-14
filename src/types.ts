@@ -4,6 +4,8 @@ export const FETCH_COUNTRIES_SUCCESS = 'FETCH_COUNTRIES_SUCCESS'
 export const FETCH_COUNTRIES_ERROR = 'FETCH_COUNTRIES_ERROR'
 export const ADD_COUNTRY = 'ADD_COUNTRY'
 export const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
+export const ADD_COUNTRY_VISITED = 'ADD_COUNTRY_VISITED'
+export const REMOVE_COUNTRY_VISITED = 'REMOVE_COUNTRY_VISITED'
 
 export type FlagProps = {
   flag: string
@@ -95,6 +97,22 @@ export type RemoveCountryAction = {
 }
 export type CartActions = AddCountryAction | RemoveCountryAction
 
+export type AddCountryToVisitedAction = {
+  type: typeof ADD_COUNTRY_VISITED
+  payload: {
+    country: Country
+  }
+}
+export type RemoveCountryFromVisitedAction = {
+  type: typeof REMOVE_COUNTRY_VISITED
+  payload: {
+    country: Country
+  }
+}
+export type VisitedActions =
+  | AddCountryToVisitedAction
+  | RemoveCountryFromVisitedAction
+
 // Theme types
 export enum Color {
   GREEN = '#4caf50',
@@ -119,8 +137,12 @@ export type CountryState = {
 export type CartState = {
   countriesInCart: Country[]
 }
+export type VisitedState = {
+  countriesInVisitedList: Country[]
+}
 
 export type AppState = {
   country: CountryState
   cart: CartState
+  visited: VisitedState
 }

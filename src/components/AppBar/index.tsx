@@ -15,6 +15,7 @@ import ThemesButton from './ThemesButton'
 
 import { SearchProps } from '../../types'
 import { useTheme } from '../../contexts/ThemeContext'
+import VisitedButton from './VisitedButton'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -58,6 +59,7 @@ export default function AppNavBar({ searchName, handleSearch }: SearchProps) {
           </div>
           <div className={classes.root} />
           <CartButton />
+          <VisitedButton />
         </Toolbar>
       </AppBar>
     </div>
