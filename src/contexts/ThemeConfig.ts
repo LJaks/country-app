@@ -13,6 +13,9 @@ export const THEMES: Record<ThemeType, Theme> = {
   violet: {
     '--primary': Color.VIOLET,
   },
+  orange: {
+    '--primary': Color.ORANGE,
+  },
   gray: {
     '--primary': Color.GRAY,
   },

@@ -120,9 +120,10 @@ export enum Color {
   RED = '#f44336',
   BLUE = '#3f50b5',
   WHITE = '#FFF',
+  ORANGE = '#ff9800',
   GRAY = '#bdbdbd',
 }
-export type ThemeType = 'blue' | 'green' | 'red' | 'violet' | 'gray'
+export type ThemeType = 'blue' | 'green' | 'red' | 'violet' | 'orange' | 'gray'
 
 export type Theme = {
   '--primary': Color
