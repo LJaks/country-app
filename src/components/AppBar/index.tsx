@@ -7,7 +7,7 @@ import {
   fade,
   makeStyles,
   Theme,
-} from '@material-ui/core/'
+} from '@material-ui/core'
 
 import CartButton from './CartButton'
 import Search from './Search'
@@ -47,7 +47,7 @@ export default function AppNavBar({ searchName, handleSearch }: SearchProps) {
   return (
     <div className={classes.root}>
       <AppBar
-        position="static"
+        position="sticky"
         // position="fixed"
         className="app-bar"
         style={{ background: theme['--primary'] }}

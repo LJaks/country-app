@@ -27,7 +27,7 @@ export type Country = {
 
 // Filtering
 export type SearchProps = {
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleSearch: (searchName: string) => void
   searchName: string
 }
 // Sorting

@@ -10,7 +10,7 @@ import {
   Button,
   withStyles,
   Theme,
-} from '@material-ui/core/'
+} from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 
 import { AppState, Color, Country } from '../../../types'

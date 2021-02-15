@@ -8,15 +8,17 @@ import AppBar from '../components/AppBar'
 
 export default function Home() {
   const [searchName, setSearchName] = useState('')
+  // const [delayedSearchName, setDelayedSearchName] = useState('')
   const [data] = useCountry(searchName)
   const [columnToSort, setColumnToSort] = useState<SortColumn>(SortColumn.Empty)
   const [sortDirection, setSortDirection] = useState<SortDirection>(
     SortDirection.Descending
   )
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(e.target.value)
+  const handleSearch = (searchName: string) => {
+    setSearchName(searchName)
   }
+
   const handleSort = (column: SortColumn) => {
     setColumnToSort(column)
     setSortDirection(

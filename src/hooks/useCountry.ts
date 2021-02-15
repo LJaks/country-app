@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { fetchCountries } from '../redux/actions/country'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -8,7 +8,7 @@ export default function useCountry(searchName: string): [Country[]] {
   const allCountries = useSelector(
     (state: AppState) => state.country.allCountries
   )
-  const [filter, setFilter] = useState<Country[]>([])
+  // const [filter, setFilter] = useState<Country[]>([])
 
   const dispatch = useDispatch()
 
@@ -16,12 +16,13 @@ export default function useCountry(searchName: string): [Country[]] {
     dispatch(fetchCountries())
   }, [dispatch])
 
-  useEffect(() => {
+  const searchResult = useMemo(() => {
     let filtered = allCountries.filter((country) =>
       country.name.toLowerCase().includes(searchName.toLowerCase())
     )
-    setFilter(filtered)
+    // setFilter(filtered)
+    return filtered
   }, [allCountries, searchName])
 
-  return [filter]
+  return [searchResult]
 }
