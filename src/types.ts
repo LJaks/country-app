@@ -13,6 +13,11 @@ export type FlagProps = {
 export type Languages = {
   name: string
 }
+export type Currencies = {
+  name: string
+  symbol: string
+  code: string
+}
 
 export type Country = {
   flag: string
@@ -21,8 +26,9 @@ export type Country = {
   population: number
   region: string
   nativeName?: string
-  capital?: string
+  capital: string
   demonym?: string
+  currencies: Currencies[]
 }
 
 // Filtering
@@ -34,10 +40,8 @@ export type SearchProps = {
 export enum SortColumn {
   Flag = 'flag',
   Name = 'name',
-  Languages = 'languages',
-  Population = 'population',
   Region = 'region',
-  Empty = '',
+  Capital = 'capital',
 }
 export type HeaderName = {
   name: string

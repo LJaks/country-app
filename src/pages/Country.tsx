@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    boxShadow: '',
+    boxShadow: '0px 2px 10px rgba(0,0,0,0.6)',
   },
   content: {
     width: '100%',
@@ -55,10 +55,12 @@ const useStyles = makeStyles({
   button: {
     color: 'white',
     height: 50,
+    boxShadow: '0px 2px 10px rgba(0,0,0,0.6)',
   },
   flag: {
     width: 300,
     borderRadius: 10,
+    boxShadow: '0px 2px 10px rgba(0,0,0,0.6)',
   },
 })
 
@@ -101,9 +103,9 @@ export default function Country() {
             <Typography
               className={classes.text}
             >{`Native name: ${country.nativeName}`}</Typography>
-            <Typography
-              className={classes.text}
-            >{`Capital: ${country.capital}`}</Typography>
+            <Typography className={classes.text}>{`Capital: ${
+              country.capital ? country.capital : '-'
+            }`}</Typography>
             <Typography
               className={classes.text}
             >{`Region: ${country.region}`}</Typography>
@@ -118,6 +120,15 @@ export default function Country() {
             >{`Languages: ${country.languages.map(
                 (lang) => lang.name
               )}`}</Typography>
+            <Typography
+              className={classes.text}
+            >{`Currency: ${country.currencies.map(
+                (curr) => curr.name
+              )} (symbol: ${country.currencies.map(
+                (curr) => curr.symbol
+              )}, code: ${country.currencies.map(
+                (curr) => curr.code
+              )})`}</Typography>
           </CardContent>
         </Card>
       ) : (

@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Flags from '../Table/Flags'
 import { removeVisitedCountry } from '../../redux/actions'
 import { AppState } from '../../types'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       width: '100%',
       marginLeft: 20,
+      textDecoration: 'none',
     },
   })
 )
@@ -84,6 +86,7 @@ export default function Visited({
 }: VisitedProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const { theme } = useTheme()
 
   const visitedCountries = useSelector(
     (state: AppState) => state.visited.countriesInVisitedList
@@ -112,7 +115,11 @@ export default function Visited({
             {visitedCountries.map((c) => (
               <div className={classes.line} id="modal-description" key={c.name}>
                 <Flags flag={c.flag} />
-                <Link className={classes.name} to={`/countries/${c.name}`}>
+                <Link
+                  className={classes.name}
+                  style={{ color: theme['--primary'] }}
+                  to={`/countries/${c.name}`}
+                >
                   {c.name}
                 </Link>
                 <IconButton

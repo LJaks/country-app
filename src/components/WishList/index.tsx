@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import { removeCountry } from '../../redux/actions/cart'
 import { AppState, CartProps } from '../../types'
 import Flags from '../Table/Flags'
+import { useTheme } from '../../contexts/ThemeContext'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       width: '100%',
       marginLeft: 20,
+      textDecoration: 'none',
     },
   })
 )
@@ -76,6 +78,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function Cart({ open, handleClose }: CartProps) {
   const classes = useStyles()
   const dispatch = useDispatch()
+  const { theme } = useTheme()
 
   const countriesinCart = useSelector(
     (state: AppState) => state.cart.countriesInCart
@@ -104,7 +107,11 @@ export default function Cart({ open, handleClose }: CartProps) {
             {countriesinCart.map((c) => (
               <div className={classes.line} id="modal-description" key={c.name}>
                 <Flags flag={c.flag} />
-                <Link className={classes.name} to={`/countries/${c.name}`}>
+                <Link
+                  className={classes.name}
+                  style={{ color: theme['--primary'] }}
+                  to={`/countries/${c.name}`}
+                >
                   {c.name}
                 </Link>
                 <IconButton

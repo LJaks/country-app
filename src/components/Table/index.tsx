@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 
 import {
+  Paper,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TablePagination,
   TableRow,
 } from '@material-ui/core'
@@ -37,35 +39,64 @@ export default function TableOfCountries({
   }
 
   return (
-    <Table>
-      <TableHeader handleSort={handleSort} />
-      <TableBody>
-        {(rowsPerPage > 0
-          ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-          : data
-        ).map((country: Country) => (
-          <Row
-            key={country.name}
-            flag={country.flag}
-            name={country.name}
-            languages={country.languages}
-            population={country.population}
-            region={country.region}
-          />
-        ))}
-        {emptyRows > 0 && (
-          <TableRow style={{ height: 53 * emptyRows }}>
-            <TableCell colSpan={6} />
-          </TableRow>
-        )}
-      </TableBody>
-      <TablePagination
-        count={data.length}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-        rowsPerPage={rowsPerPage}
-        page={page}
-      />
-    </Table>
+    <>
+      <TableContainer
+        component={Paper}
+        style={{
+          width: '95%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignSelf: 'center',
+          margin: '0 auto',
+          marginBottom: '20px',
+        }}
+      >
+        <Table>
+          <TableHeader handleSort={handleSort} />
+          <TableBody>
+            {(rowsPerPage > 0
+              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : data
+            ).map((country: Country) => {
+              const {
+                name,
+                flag,
+                languages,
+                currencies,
+                population,
+                region,
+                capital,
+              } = country
+              return (
+                <Row
+                  key={name}
+                  flag={flag}
+                  name={name}
+                  languages={languages}
+                  population={population}
+                  region={region}
+                  capital={capital}
+                  currencies={currencies}
+                />
+              )
+            })}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+        <TablePagination
+          component="div"
+          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          count={data.length}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+          rowsPerPage={rowsPerPage}
+          page={page}
+        />
+      </TableContainer>
+    </>
   )
 }

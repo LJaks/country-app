@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import ExploreIcon from '@material-ui/icons/Explore'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 import { IconButton, Badge } from '@material-ui/core/'
 
 import WishList from '../../WishList'
@@ -31,7 +31,7 @@ export default function CartButton() {
         onClick={handleOpen}
       >
         <Badge badgeContent={countriesinCart.length} color="secondary">
-          <ExploreIcon />
+          <FavoriteIcon />
         </Badge>
         Wish List
       </IconButton>

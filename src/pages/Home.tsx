@@ -6,11 +6,12 @@ import { SortDirection, SortColumn } from '../types'
 import TableOfCountries from '../components/Table'
 import AppBar from '../components/AppBar'
 import Chart from '../components/Chart'
+import background from '../assets/worldMap.svg'
 
 export default function Home() {
   const [searchName, setSearchName] = useState('')
   const [data] = useCountry(searchName)
-  const [columnToSort, setColumnToSort] = useState<SortColumn>(SortColumn.Empty)
+  const [columnToSort, setColumnToSort] = useState<SortColumn>()
   const [sortDirection, setSortDirection] = useState<SortDirection>(
     SortDirection.Descending
   )
@@ -31,13 +32,24 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div>
       <AppBar searchName={searchName} handleSearch={handleSearch} />
-      <Chart />
+      <div
+        style={{
+          backgroundImage: `url(${background}`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '80% auto',
+          backgroundPosition: 'center top',
+          padding: '30px 0',
+          marginTop: '20px',
+        }}
+      >
+        <Chart />
+      </div>
       <TableOfCountries
         data={orderBy(data, columnToSort, sortDirection)}
         handleSort={handleSort}
       />
-    </>
+    </div>
   )
 }
