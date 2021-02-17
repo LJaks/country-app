@@ -8,13 +8,25 @@ import {
   makeStyles,
   Theme,
   createStyles,
+  withStyles,
+  Tooltip,
 } from '@material-ui/core/'
-import DeleteIcon from '@material-ui/icons/Delete'
+import ClearIcon from '@material-ui/icons/Clear'
+import CloseIcon from '@material-ui/icons/Close'
 
 import { removeCountry } from '../../redux/actions/cart'
 import { AppState, CartProps } from '../../types'
 import Flags from '../Table/Flags'
 import { useTheme } from '../../contexts/ThemeContext'
+
+const LightTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    color: 'white',
+    boxShadow: theme.shadows[1],
+    fontSize: 15,
+    fontWeight: 400,
+  },
+}))(Tooltip)
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       // overflowY: 'scroll',
-      width: '100%',
+      width: '70%',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -93,7 +105,7 @@ export default function Cart({ open, handleClose }: CartProps) {
     >
       <div className={classes.paper}>
         <IconButton className={classes.button} onClick={handleClose}>
-          X
+          <CloseIcon />
         </IconButton>
         <h2 id="modal-title">Wish List</h2>
         {countriesinCart.length === 0 ? (
@@ -107,20 +119,33 @@ export default function Cart({ open, handleClose }: CartProps) {
             {countriesinCart.map((c) => (
               <div className={classes.line} id="modal-description" key={c.name}>
                 <Flags flag={c.flag} />
-                <Link
-                  className={classes.name}
-                  style={{ color: theme['--primary'] }}
-                  to={`/countries/${c.name}`}
+                <LightTooltip
+                  title="Press to read more"
+                  aria-label="Read more about a country"
+                  placement="top-start"
                 >
-                  {c.name}
-                </Link>
-                <IconButton
-                  onClick={() => {
-                    dispatch(removeCountry(c))
-                  }}
+                  <Link
+                    className={classes.name}
+                    style={{ color: theme['--primary'] }}
+                    to={`/countries/${c.name}`}
+                  >
+                    {c.name}
+                  </Link>
+                </LightTooltip>
+                <LightTooltip
+                  title="Remove country from the list"
+                  aria-label="Remove country from the list"
+                  placement="top"
+                  arrow
                 >
-                  <DeleteIcon />
-                </IconButton>
+                  <IconButton
+                    onClick={() => {
+                      dispatch(removeCountry(c))
+                    }}
+                  >
+                    <ClearIcon />
+                  </IconButton>
+                </LightTooltip>
               </div>
             ))}
           </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   makeStyles,
@@ -8,11 +8,33 @@ import {
   Card,
   Typography,
   Button,
+  Theme,
+  withStyles,
+  Tooltip,
 } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import CheckIcon from '@material-ui/icons/Check'
+import ClearIcon from '@material-ui/icons/Clear'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
-import { AppState } from '../types'
+import { AppState, Color, Country } from '../types'
 import { useTheme } from '../contexts/ThemeContext'
+import {
+  addCountry,
+  addVisitedCountry,
+  removeCountry,
+  removeVisitedCountry,
+} from '../redux/actions'
+
+const LightTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    color: 'white',
+    boxShadow: theme.shadows[1],
+    fontSize: 15,
+    fontWeight: 400,
+  },
+}))(Tooltip)
 
 const useStyles = makeStyles({
   root: {
@@ -24,12 +46,13 @@ const useStyles = makeStyles({
   },
   card: {
     minWidth: 275,
-    width: '70%',
+    width: '50%',
     height: '70%',
     marginTop: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    background: 'rgba(95, 93, 126, 0.4)',
     boxShadow: '0px 2px 10px rgba(0,0,0,0.6)',
   },
   content: {
@@ -39,7 +62,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 0,
+    margin: 10,
   },
   title: {
     fontSize: 25,
@@ -50,7 +73,7 @@ const useStyles = makeStyles({
   text: {
     fontSize: 18,
     fontWeight: 'bold',
-    margin: 10,
+    margin: 5,
   },
   button: {
     color: 'white',
@@ -64,14 +87,38 @@ const useStyles = makeStyles({
   },
 })
 
-export default function Country() {
+export default function CountryPage() {
   const { name } = useParams<{ name: string }>()
   const { theme } = useTheme()
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const country = useSelector((state: AppState) =>
     state.country.allCountries.find((cntr) => cntr.name === name)
   )
+
+  const countryInCart = useSelector(
+    (state: AppState) => state.cart.countriesInCart
+  ).find((cntr) => cntr.name === name)
+
+  const countryVisited = useSelector(
+    (state: AppState) => state.visited.countriesInVisitedList
+  ).find((cntr) => cntr.name === name)
+
+  const handleAddCountry = (country: Country) => {
+    dispatch(addCountry(country))
+  }
+
+  const handleRemoveCountry = (country: Country) => {
+    dispatch(removeCountry(country))
+  }
+
+  const handleAddVisited = (country: Country) => {
+    dispatch(addVisitedCountry(country))
+  }
+  const handleRemoveVisited = (country: Country) => {
+    dispatch(removeVisitedCountry(country))
+  }
 
   return (
     <div className={classes.root}>
@@ -87,10 +134,7 @@ export default function Country() {
         </Button>
       </div>
       {country ? (
-        <Card
-          style={{ background: theme['--primary'] }}
-          className={classes.card}
-        >
+        <Card className={classes.card}>
           <CardContent className={classes.content}>
             <img
               className={classes.flag}
@@ -129,6 +173,72 @@ export default function Country() {
               )}, code: ${country.currencies.map(
                 (curr) => curr.code
               )})`}</Typography>
+            <div>
+              <LightTooltip
+                title={
+                  !countryInCart
+                    ? 'Add country to wish list'
+                    : 'Remove country from wish list'
+                }
+                aria-label={
+                  !countryInCart
+                    ? 'Add country to wish list'
+                    : 'Remove country from wish list'
+                }
+                placement="top"
+                arrow
+              >
+                <Button
+                  className={classes.button}
+                  style={{
+                    background: !countryInCart
+                      ? theme['--primary']
+                      : Color.GRAY,
+                    color: Color.WHITE,
+                    margin: '10px',
+                  }}
+                  onClick={() => {
+                    !countryInCart
+                      ? handleAddCountry(country)
+                      : handleRemoveCountry(country)
+                  }}
+                >
+                  {!countryInCart ? <FavoriteBorderIcon /> : <FavoriteIcon />}
+                </Button>
+              </LightTooltip>
+              <LightTooltip
+                title={
+                  !countryVisited
+                    ? 'Add country to visited list'
+                    : 'Remove country from visited list'
+                }
+                aria-label={
+                  !countryVisited
+                    ? 'Add country to visited list'
+                    : 'Remove country from visited list'
+                }
+                placement="top"
+                arrow
+              >
+                <Button
+                  className={classes.button}
+                  style={{
+                    background: !countryVisited
+                      ? theme['--primary']
+                      : Color.GRAY,
+                    color: Color.WHITE,
+                    margin: '10px',
+                  }}
+                  onClick={() => {
+                    !countryVisited
+                      ? handleAddVisited(country)
+                      : handleRemoveVisited(country)
+                  }}
+                >
+                  {!countryVisited ? <CheckIcon /> : <ClearIcon />}
+                </Button>
+              </LightTooltip>
+            </div>
           </CardContent>
         </Card>
       ) : (

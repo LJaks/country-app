@@ -47,8 +47,7 @@ export default function AppNavBar({ searchName, handleSearch }: SearchProps) {
   return (
     <div className={classes.root}>
       <AppBar
-        position="sticky"
-        // position="fixed"
+        position="fixed"
         className="app-bar"
         style={{ background: theme['--primary'] }}
       >

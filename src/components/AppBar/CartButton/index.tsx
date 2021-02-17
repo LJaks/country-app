@@ -28,12 +28,13 @@ export default function CartButton() {
         aria-label="want to visit countries"
         aria-haspopup="true"
         color="inherit"
+        style={{ margin: '0 10px' }}
         onClick={handleOpen}
       >
+        Wish List
         <Badge badgeContent={countriesinCart.length} color="secondary">
           <FavoriteIcon />
         </Badge>
-        Wish List
       </IconButton>
       <WishList handleClose={handleClose} open={open} />
     </>

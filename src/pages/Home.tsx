@@ -40,8 +40,9 @@ export default function Home() {
           backgroundRepeat: 'no-repeat',
           backgroundSize: '80% auto',
           backgroundPosition: 'center top',
-          padding: '30px 0',
-          marginTop: '20px',
+          backgroundPositionY: '30px',
+          padding: '40px 0',
+          marginTop: '40px',
         }}
       >
         <Chart />

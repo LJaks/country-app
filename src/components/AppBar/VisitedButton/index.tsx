@@ -27,12 +27,13 @@ export default function VisitedButton() {
         aria-label="visited countries"
         aria-haspopup="true"
         color="inherit"
+        style={{ margin: '0 10px' }}
         onClick={handleOpenVisited}
       >
+        Visited
         <Badge badgeContent={visitedCountries.length} color="secondary">
           <DoneAllIcon />
         </Badge>
-        Visited
       </IconButton>
       <Visited
         handleCloseVisited={handleCloseVisited}

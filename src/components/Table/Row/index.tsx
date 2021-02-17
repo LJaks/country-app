@@ -12,8 +12,8 @@ import {
   Button,
   withStyles,
   Theme,
+  Tooltip,
 } from '@material-ui/core'
-import Tooltip from '@material-ui/core/Tooltip'
 
 import { AppState, Color, Country } from '../../../types'
 import Flags from '../Flags'
@@ -68,9 +68,9 @@ export default function Row(country: Country) {
       </TableCell>
       <TableCell style={{ textAlign: 'center' }}>
         <LightTooltip
-          title="Read more"
+          title="Press to read more"
           aria-label="Read more about a country"
-          placement="bottom"
+          placement="top"
         >
           <Link
             style={{ textDecoration: 'none', color: theme['--primary'] }}

@@ -58,7 +58,7 @@ export default function ThemesButton() {
   return (
     <div className="theme-block">
       <IconButton
-        style={{ color: 'white' }}
+        style={{ color: 'white', margin: '0 10px' }}
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
