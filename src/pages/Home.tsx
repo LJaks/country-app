@@ -1,56 +1,56 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import orderBy from 'lodash/orderBy'
 
-import { Product, AppState } from '../types'
-import { addProduct, removeProduct } from '../redux/actions'
-
-const names = [
-  'Apple',
-  'Orange',
-  'Avocado',
-  'Banana',
-  'Cucumber',
-  'Carrot',
-]
+import useCountry from '../hooks/useCountry'
+import { SortDirection, SortColumn } from '../types'
+import TableOfCountries from '../components/Table'
+import AppBar from '../components/AppBar'
+import Chart from '../components/Chart'
+import background from '../assets/worldMap.svg'
 
 export default function Home() {
-  const dispatch = useDispatch()
-  const products = useSelector((state: AppState) => state.product.inCart)
+  const [searchName, setSearchName] = useState('')
+  const [data] = useCountry(searchName)
+  const [columnToSort, setColumnToSort] = useState<SortColumn>()
+  const [sortDirection, setSortDirection] = useState<SortDirection>(
+    SortDirection.Descending
+  )
 
-  const handleAddProduct = () => {
-    const product: Product = {
-      id: (+new Date()).toString(),
-      name: names[Math.floor(Math.random() * names.length)],
-      price: +(Math.random() * 10).toFixed(2),
-    }
-    dispatch(addProduct(product))
+  const handleSearch = (searchName: string) => {
+    setSearchName(searchName)
+  }
+
+  const handleSort = (column: SortColumn) => {
+    setColumnToSort(column)
+    setSortDirection(
+      columnToSort === column
+        ? sortDirection === SortDirection.Ascending
+          ? SortDirection.Descending
+          : SortDirection.Ascending
+        : SortDirection.Ascending
+    )
   }
 
   return (
-    <>
-      <h1>Home page</h1>
-      { products.length <= 0 && <div>No products in cart</div> }
-      <ul>
-        { products.map(p => (
-          <li key={p.id}>
-            <Link to={`/products/${p.id}`}>
-              {`${p.name} - $${p.price}`}
-            </Link>
-
-            {'  '}
-
-            <button onClick={ () => dispatch(removeProduct(p)) }>
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={ handleAddProduct }
+    <div>
+      <AppBar searchName={searchName} handleSearch={handleSearch} />
+      <div
+        style={{
+          backgroundImage: `url(${background}`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '80% auto',
+          backgroundPosition: 'center top',
+          backgroundPositionY: '30px',
+          padding: '40px 0',
+          marginTop: '40px',
+        }}
       >
-        Add product
-      </button>
-    </>
+        <Chart />
+      </div>
+      <TableOfCountries
+        data={orderBy(data, columnToSort, sortDirection)}
+        handleSort={handleSort}
+      />
+    </div>
   )
 }

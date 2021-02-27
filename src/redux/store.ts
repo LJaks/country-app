@@ -6,12 +6,19 @@ import { AppState } from '../types'
 import createRootReducer from './reducers'
 import rootSaga from './sagas'
 
-const initState: AppState = {
-  product: {
-    inCart: [],
+const initState = (JSON.parse(
+  localStorage.getItem('cart') || '{}'
+) as AppState) || {
+  country: {
+    allCountries: [],
+    pending: false,
+    error: null,
   },
-  ui: {
-    dialogOpen: {},
+  cart: {
+    countriesInCart: [],
+  },
+  visited: {
+    countriesInVisitedList: [],
   },
 }
 
