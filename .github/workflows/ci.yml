@@ -1,0 +1,62 @@
+name: Country-app CI/CD
+
+on:
+  push:
+    branches: [develop, feature-visited]
+
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: get yarn cache
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: set up cache
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - name: install dependencies
+        run: yarn
+
+      - name: run lint
+        run: yarn run lint
+
+      - name: build docker image
+        run: docker build . -t ljaks/github-actions-country-app
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: push to dockerhub
+        run: docker push ljaks/github-actions-country-app
+
+      - name: login to heroku
+        run: heroku container:login
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+
+      - name: push to heroku
+        run: heroku container:push -a fs6-github-action web
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+
+      - name: release the image
+        run: heroku container:release -a fs6-github-action web
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
