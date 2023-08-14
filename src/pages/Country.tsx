@@ -19,6 +19,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 
 import { AppState, Color, Country } from '../types'
+import CountryFlags from '../components/Table/Flags'
 import { useTheme } from '../contexts/ThemeContext'
 import {
   addCountry,
@@ -94,16 +95,16 @@ export default function CountryPage() {
   const dispatch = useDispatch()
 
   const country = useSelector((state: AppState) =>
-    state.country.allCountries.find((cntr) => cntr.name === name)
+    state.country.allCountries.find((cntr) => cntr.name.common === name)
   )
 
   const countryInCart = useSelector(
     (state: AppState) => state.cart.countriesInCart
-  ).find((cntr) => cntr.name === name)
+  ).find((cntr) => cntr.name.common === name)
 
   const countryVisited = useSelector(
     (state: AppState) => state.visited.countriesInVisitedList
-  ).find((cntr) => cntr.name === name)
+  ).find((cntr) => cntr.name.common === name)
 
   const handleAddCountry = (country: Country) => {
     dispatch(addCountry(country))
@@ -136,17 +137,13 @@ export default function CountryPage() {
       {country ? (
         <Card className={classes.card}>
           <CardContent className={classes.content}>
-            <img
-              className={classes.flag}
-              src={country.flag}
-              alt="Country flag"
-            />
+            <CountryFlags flag={country.flags} />
             <Typography className={classes.title} variant="h2" component="h2">
-              {country.name}
+              {country.name.common}
             </Typography>
-            <Typography
-              className={classes.text}
-            >{`Native name: ${country.nativeName}`}</Typography>
+            <Typography className={classes.text}>{`Native name: ${Object.values(
+              country.name.nativeName
+            ).map((name) => name.common)}`}</Typography>
             <Typography className={classes.text}>{`Capital: ${
               country.capital ? country.capital : '-'
             }`}</Typography>
@@ -155,24 +152,16 @@ export default function CountryPage() {
             >{`Region: ${country.region}`}</Typography>
             <Typography
               className={classes.text}
-            >{`Demonym: ${country.demonym}`}</Typography>
-            <Typography
-              className={classes.text}
             >{`Population: ${country.population.toLocaleString()}`}</Typography>
-            <Typography
-              className={classes.text}
-            >{`Languages: ${country.languages.map(
-                (lang) => lang.name
-              )}`}</Typography>
-            <Typography
-              className={classes.text}
-            >{`Currency: ${country.currencies.map(
-                (curr) => curr.name
-              )} (symbol: ${country.currencies.map(
-                (curr) => curr.symbol
-              )}, code: ${country.currencies.map(
-                (curr) => curr.code
-              )})`}</Typography>
+            <Typography className={classes.text}>{`Languages: ${Object.values(
+              country.languages
+            )}`}</Typography>
+            <Typography className={classes.text}>{`Currency: ${Object.values(
+              country.currencies
+            ).map((curr) => {
+              return curr.name + ' (' + curr.symbol + ')'
+            })}
+              `}</Typography>
             <div>
               <LightTooltip
                 title={

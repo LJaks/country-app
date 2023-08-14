@@ -1,12 +1,17 @@
 import React from 'react'
+type CountryFlagsProps = {
+  flag: {
+    png: string
+    svg: string
+    alt: string
+  }
+}
 
-import { FlagProps } from '../../../types'
-
-export default function Flags({ flag }: FlagProps) {
+export default function CountryFlags({ flag }: CountryFlagsProps) {
   return (
     <img
-      src={flag}
-      alt="Country flag"
+      src={flag.png}
+      alt={flag.alt}
       style={{ width: '100px', boxShadow: '0px 2px 10px rgba(0,0,0,0.6)' }}
     />
   )

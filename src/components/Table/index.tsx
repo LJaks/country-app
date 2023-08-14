@@ -60,7 +60,7 @@ export default function TableOfCountries({
             ).map((country: Country) => {
               const {
                 name,
-                flag,
+                flags,
                 languages,
                 currencies,
                 population,
@@ -69,8 +69,8 @@ export default function TableOfCountries({
               } = country
               return (
                 <Row
-                  key={name}
-                  flag={flag}
+                  key={name.common}
+                  flags={flags}
                   name={name}
                   languages={languages}
                   population={population}

@@ -29,7 +29,7 @@ export function fetchCountriesError(error: Error) {
 export function fetchCountries() {
   return (dispatch: Dispatch) => {
     dispatch(fetchCountriesPending())
-    fetch(`https://restcountries.eu/rest/v2/all`)
+    fetch(`https://restcountries.com/v3.1/all`)
       .then((resp) => resp.json())
       .then((countries) => {
         dispatch(fetchCountriesSuccess(countries))

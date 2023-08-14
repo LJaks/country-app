@@ -7,28 +7,34 @@ export const REMOVE_COUNTRY = 'REMOVE_COUNTRY'
 export const ADD_COUNTRY_VISITED = 'ADD_COUNTRY_VISITED'
 export const REMOVE_COUNTRY_VISITED = 'REMOVE_COUNTRY_VISITED'
 
-export type FlagProps = {
-  flag: string
-}
 export type Languages = {
-  name: string
+  [key: string]: string
 }
 export type Currencies = {
-  name: string
-  symbol: string
-  code: string
+  [key: string]: {
+    name: string
+    symbol: string
+  }
+}
+export type Name = {
+  common: string
+  nativeName: { [key: string]: { official: string; common: string } }
+  official: string
+}
+export type Flags = {
+  alt: string
+  png: string
+  svg: string
 }
 
 export type Country = {
-  flag: string
-  name: string
-  languages: Languages[]
+  flags: Flags
+  name: Name
+  languages: Languages
   population: number
   region: string
-  nativeName?: string
   capital: string
-  demonym?: string
-  currencies: Currencies[]
+  currencies: Currencies
 }
 
 // Filtering

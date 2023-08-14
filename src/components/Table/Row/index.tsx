@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core'
 
 import { AppState, Color, Country } from '../../../types'
-import Flags from '../Flags'
+import CountryFlags from '../Flags'
 import { useTheme } from '../../../contexts/ThemeContext'
 import { addCountry, removeCountry } from '../../../redux/actions/cart'
 import {
@@ -34,7 +34,7 @@ const LightTooltip = withStyles((theme: Theme) => ({
 }))(Tooltip)
 
 export default function Row(country: Country) {
-  const { flag, name, capital, region } = country
+  const { flags, name, capital, region } = country
   const { theme } = useTheme()
   const dispatch = useDispatch()
 
@@ -64,7 +64,7 @@ export default function Row(country: Country) {
   return (
     <TableRow>
       <TableCell style={{ textAlign: 'center' }}>
-        <Flags flag={flag} />
+        <CountryFlags flag={flags} />
       </TableCell>
       <TableCell style={{ textAlign: 'center' }}>
         <LightTooltip
@@ -74,9 +74,9 @@ export default function Row(country: Country) {
         >
           <Link
             style={{ textDecoration: 'none', color: theme['--primary'] }}
-            to={`/countries/${name}`}
+            to={`/countries/${name.common}`}
           >
-            {name}
+            {name.common}
           </Link>
         </LightTooltip>
       </TableCell>

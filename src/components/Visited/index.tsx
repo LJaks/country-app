@@ -14,7 +14,7 @@ import {
 import ClearIcon from '@material-ui/icons/Clear'
 import CloseIcon from '@material-ui/icons/Close'
 
-import Flags from '../Table/Flags'
+import CountryFlags from '../Table/Flags'
 import { removeVisitedCountry } from '../../redux/actions'
 import { AppState } from '../../types'
 import { useTheme } from '../../contexts/ThemeContext'
@@ -125,8 +125,12 @@ export default function Visited({
             }
           >
             {visitedCountries.map((c) => (
-              <div className={classes.line} id="modal-description" key={c.name}>
-                <Flags flag={c.flag} />
+              <div
+                className={classes.line}
+                id="modal-description"
+                key={c.name.common}
+              >
+                <CountryFlags flag={c.flags} />
                 <LightTooltip
                   title="Press to read more"
                   aria-label="Read more about a country"
@@ -135,9 +139,9 @@ export default function Visited({
                   <Link
                     className={classes.name}
                     style={{ color: theme['--primary'] }}
-                    to={`/countries/${c.name}`}
+                    to={`/countries/${c.name.common}`}
                   >
-                    {c.name}
+                    {c.name.common}
                   </Link>
                 </LightTooltip>
                 <LightTooltip
