@@ -38,28 +38,28 @@ export default function Row(country: Country) {
   const { theme } = useTheme()
   const dispatch = useDispatch()
 
-  const handleAddCountry = () => {
+  const handleAddCountry = (country: Country) => {
     dispatch(addCountry(country))
   }
 
-  const handleRemoveCountry = () => {
+  const handleRemoveCountry = (country: Country) => {
     dispatch(removeCountry(country))
   }
 
-  const handleAddVisited = () => {
+  const handleAddVisited = (country: Country) => {
     dispatch(addVisitedCountry(country))
   }
-  const handleRemoveVisited = () => {
+  const handleRemoveVisited = (country: Country) => {
     dispatch(removeVisitedCountry(country))
   }
 
   const countryInCart = useSelector(
     (state: AppState) => state.cart.countriesInCart
-  ).find((cntr) => cntr.name === name)
+  ).find((cntr) => cntr.name.common === name.common)
 
   const countryVisited = useSelector(
     (state: AppState) => state.visited.countriesInVisitedList
-  ).find((cntr) => cntr.name === name)
+  ).find((cntr) => cntr.name.common === name.common)
 
   return (
     <TableRow>
@@ -108,7 +108,9 @@ export default function Row(country: Country) {
               color: Color.WHITE,
             }}
             onClick={() => {
-              !countryInCart ? handleAddCountry() : handleRemoveCountry()
+              !countryInCart
+                ? handleAddCountry(country)
+                : handleRemoveCountry(country)
             }}
           >
             {!countryInCart ? <FavoriteBorderIcon /> : <FavoriteIcon />}
@@ -137,7 +139,9 @@ export default function Row(country: Country) {
               color: Color.WHITE,
             }}
             onClick={() => {
-              !countryVisited ? handleAddVisited() : handleRemoveVisited()
+              !countryVisited
+                ? handleAddVisited(country)
+                : handleRemoveVisited(country)
             }}
           >
             {!countryVisited ? <CheckIcon /> : <ClearIcon />}

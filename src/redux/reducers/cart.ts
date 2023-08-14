@@ -12,7 +12,9 @@ export default function countriesReducer(
   switch (action.type) {
     case ADD_COUNTRY: {
       const { country } = action.payload
-      if (state.countriesInCart.find((c) => c.name === country.name)) {
+      if (
+        state.countriesInCart.find((c) => c.name.common === country.name.common)
+      ) {
         return state
       }
       // Always return new state (e.g, new object) if changed
@@ -22,7 +24,7 @@ export default function countriesReducer(
     case REMOVE_COUNTRY: {
       const { country } = action.payload
       const index = state.countriesInCart.findIndex(
-        (c) => c.name === country.name
+        (c) => c.name.common === country.name.common
       )
       if (index >= 0) {
         state.countriesInCart.splice(index, 1)
